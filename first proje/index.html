@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Noire Ciel - Lüks Moda</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-dark: #0F0F0F;
+            --primary-gold: #C8AA6E;
+            --text-light: #FFFFFF;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Playfair Display', serif;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            line-height: 1.6;
+            scroll-behavior: smooth;
+        }
+        #hero {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+        #brand-name {
+            font-size: 6rem;
+            font-weight: 700;
+            color: var(--primary-gold);
+            text-transform: uppercase;
+            letter-spacing: 0.5rem;
+            text-shadow: 0 0 10px rgba(200, 170, 110, 0.5);
+            animation: luxury-fade-in 3s ease-out infinite alternate;
+            opacity: 1; 
+            cursor: default;
+        }
+        @keyframes luxury-fade-in {
+            0% { opacity: 0; transform: translateY(50px) scale(0.9); letter-spacing: 1rem; }
+            100% { opacity: 1; transform: translateY(0) scale(1); letter-spacing: 0.5rem; }
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: rgba(15, 15, 15, 0.95);
+            padding: 1rem 3rem;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s;
+        }
+        .navbar-left {
+            display: flex;
+            align-items: center;
+        }
+        .navbar-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-gold);
+            text-decoration: none;
+            letter-spacing: 0.1rem;
+            margin-right: 2rem;
+        }
+        .navbar-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            margin-left: 2rem;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            transition: color 0.3s, border-bottom 0.3s;
+            padding-bottom: 5px;
+        }
+        .navbar-links a:hover {
+            color: var(--primary-gold);
+            border-bottom: 1px solid var(--primary-gold);
+        }
+        .cart-icon {
+            color: var(--primary-gold);
+            font-size: 1.2rem;
+            cursor: pointer;
+            margin-left: 2rem;
+            position: relative;
+        }
+        #cart-count {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background-color: var(--primary-gold);
+            color: var(--bg-dark);
+            border-radius: 50%;
+            padding: 0 5px;
+            font-size: 0.7rem;
+            font-weight: 700;
+        }
+        #gallery {
+            padding: 5rem 0;
+            text-align: center;
+        }
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 0 5%;
+            margin-top: 3rem;
+        }
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(200, 170, 110, 0.3);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            cursor: pointer;
+            opacity: 0;
+            transform: translateY(50px) scale(0.95);
+            transition: transform 0.8s ease-out, opacity 0.8s ease-out;
+        }
+        .gallery-item.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+        .gallery-item img {
+            width: 100%;
+            height: 400px;
+            display: block;
+            object-fit: cover;
+            transition: transform 0.5s ease-in-out;
+        }
+        .gallery-item:hover img {
+            transform: scale(1.05);
+        }
+        .gallery-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(15, 15, 15, 0.7);
+            color: var(--primary-gold);
+            padding: 0.8rem 1rem;
+            font-size: 1rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            transition: background-color 0.3s;
+        }
+        .gallery-item:hover .gallery-caption {
+            background-color: rgba(200, 170, 110, 0.8);
+            color: var(--bg-dark);
+        }
+        #shop {
+            padding: 8rem 5%;
+            text-align: center;
+            background-color: #1a1a1a;
+        }
+        .shop-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+        .product-card {
+            background-color: var(--bg-dark);
+            border: 1px solid rgba(200, 170, 110, 0.3);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            padding-bottom: 1rem;
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: transform 0.8s ease-out, opacity 0.8s ease-out;
+        }
+        .product-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .product-image-container {
+            position: relative;
+            overflow: hidden;
+        }
+        .product-card img {
+            width: 100%;
+            height: 450px;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .product-card:hover img {
+            transform: scale(1.05);
+        }
+        .product-details {
+            padding: 1rem;
+            text-align: left;
+        }
+
+        .product-details h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-light);
+        }
+        .product-price {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: var(--primary-gold);
+            color: var(--bg-dark);
+            padding: 0.5rem 1rem;
+            font-size: 1.2rem;
+            font-weight: 700;
+            opacity: 0;
+            transform: translateX(100%);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+        .product-card:hover .product-price {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        .product-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1rem;
+        }
+
+        .size-select {
+            padding: 0.5rem;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            border: 1px solid var(--primary-gold);
+            font-family: sans-serif;
+            cursor: pointer;
+        }
+
+        .add-to-cart {
+            padding: 0.7rem 1.5rem;
+            background-color: var(--primary-gold);
+            color: var(--bg-dark);
+            border: none;
+            cursor: pointer;
+            font-weight: 700;
+            text-transform: uppercase;
+            transition: background-color 0.3s;
+        }
+        .add-to-cart:hover {
+            background-color: #e0c286;
+        }
+        #about {
+            padding: 8rem 5%;
+            text-align: center;
+            background-color: #1a1a1a;
+            overflow: hidden;
+        }
+        .about-content {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            opacity: 0;
+            transform: scale(0.8);
+            transition: opacity 1s ease-out, transform 1s ease-out;
+        }
+        .about-content.visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+        .about-content h2 {
+            font-size: 2.5rem;
+            color: var(--primary-gold);
+            margin-bottom: 1.5rem;
+        }
+        .about-content p {
+            font-size: 1.1rem;
+            color: #ccc;
+            margin-bottom: 1rem;
+            font-family: sans-serif;
+        }
+
+        #signup {
+            padding: 5rem 5%;
+            text-align: center;
+        }
+        #signup h2 {
+            font-size: 2.5rem;
+            color: var(--primary-gold);
+            margin-bottom: 1.5rem;
+        }
+        .signup-form {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        .signup-form input[type="email"] {
+            padding: 1rem 1.5rem;
+            width: 350px;
+            max-width: 80%;
+            border: 2px solid var(--primary-gold);
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+        .signup-form input[type="email"]:focus {
+            border-color: var(--text-light);
+        }
+        .signup-form button {
+            padding: 1rem 2rem;
+            background-color: var(--primary-gold);
+            color: var(--bg-dark);
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        .signup-form button:hover {
+            background-color: #e0c286;
+            transform: translateY(-2px);
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem 5%;
+            border-top: 1px solid rgba(200, 170, 110, 0.1);
+            color: #666;
+            font-size: 0.8rem;
+            margin-top: 3rem;
+            font-family: sans-serif;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1001;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.9);
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            margin: auto;
+            display: block;
+            max-width: 80%;
+            max-height: 90%;
+            object-fit: contain;
+            animation: zoomIn 0.6s ease-out;
+        }
+        .modal-caption {
+            margin: auto;
+            display: block;
+            width: 80%;
+            max-width: 700px;
+            text-align: center;
+            color: #ccc;
+            padding: 10px 0;
+            height: 150px;
+        }
+        .close-button {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #fff;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+        .close-button:hover,
+        .close-button:focus {
+            color: var(--primary-gold);
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .cart-modal-content {
+            background-color: var(--bg-dark);
+            margin: 10% auto;
+            padding: 30px;
+            border: 2px solid var(--primary-gold);
+            width: 90%;
+            max-width: 600px;
+            box-shadow: 0 5px 15px rgba(200, 170, 110, 0.2);
+            position: relative;
+            animation: fadeIn 0.5s;
+        }
+        .welcome-modal-content {
+            max-width: 450px;
+            text-align: center;
+        }
+
+        .welcome-message {
+            padding: 20px 0 30px 0;
+            line-height: 1.8;
+            color: #ccc;
+            font-family: sans-serif;
+        }
+        .welcome-message strong {
+            color: var(--primary-gold);
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            display: block;
+            margin-bottom: 10px;
+        }
+        .welcome-continue-button {
+            width: 100%;
+        }
+        .welcome-close-button {
+            top: 10px;
+            right: 20px;
+        }
+
+        .cart-title {
+            color: var(--primary-gold);
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(200, 170, 110, 0.5);
+            padding-bottom: 10px;
+        }
+        .cart-items-container {
+            max-height: 400px;
+            overflow-y: auto;
+            margin-bottom: 20px;
+            padding-right: 10px;
+        }
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #333;
+            font-family: sans-serif;
+        }
+        .item-info {
+            flex-grow: 1;
+            text-align: left;
+        }
+        .item-name {
+            font-weight: 700;
+            color: var(--text-light);
+        }
+        .item-details {
+            font-size: 0.9rem;
+            color: #aaa;
+        }
+        .item-price {
+            color: var(--primary-gold);
+            font-weight: 700;
+            margin-left: 20px;
+        }
+        .cart-summary {
+            text-align: right;
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid var(--primary-gold);
+        }
+
+        .cart-summary p {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--text-light);
+        }
+        .total-price {
+            color: var(--primary-gold);
+        }
+        .checkout-button {
+            padding: 1rem 2rem;
+            background-color: var(--primary-gold);
+            color: var(--bg-dark);
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 700;
+            margin-top: 15px;
+            transition: background-color 0.3s;
+        }
+        .checkout-button:hover {
+            background-color: #e0c286;
+        }
+        
+        .cart-close-button {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+        }
+
+        .prev-next-button {
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            width: auto;
+            padding: 16px;
+            margin-top: -50px;
+            color: white;
+            font-weight: bold;
+            font-size: 20px;
+            transition: 0.6s ease;
+            border-radius: 0 3px 3px 0;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+        .prev {
+            left: 0;
+            border-radius: 3px 0 0 3px;
+        }
+        .next {
+            right: 0;
+            border-radius: 3px 0 0 3px;
+        }
+        .prev-next-button:hover {
+            background-color: rgba(200, 170, 110, 0.8);
+            color: var(--bg-dark);
+        }
+
+        @keyframes zoomIn {
+            from {transform: scale(0.7)}
+            to {transform: scale(1)}
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+    </style>
+    </head>
+<body>
+
+    <nav class="navbar">
+        <div class="navbar-left">
+            <a href="#hero" class="navbar-logo">Noire Ciel</a>
+            <div class="navbar-links">
+                <a href="#gallery">Collection</a>
+                <a href="#shop">Shop</a>
+                <a href="#about">About Us</a>
+                <a href="#signup">Sign Up</a>
+            </div>
+        </div>
+        <div class="cart-icon">
+            <i class="fa-solid fa-bag-shopping"></i>
+            <span id="cart-count">0</span>
+        </div>
+    </nav>
+
+    <section id="hero">
+        <h1 id="brand-name">Noire Ciel</h1>
+    </section>
+
+    <section id="gallery">
+        <h2>New Collection</h2>
+        <div class="gallery-grid">
+            <div class="gallery-item">
+                <img src="Gemini_Generated_Image_j6gp0fj6gp0fj6gp.png" alt="Aristocrat">
+                <div class="gallery-caption">Aristocrat</div>
+            </div>
+            <div class="gallery-item">
+                <img src="unnamed.jpg" alt="Cotton Candy">
+                <div class="gallery-caption">Cotton Candy</div>
+            </div>
+            <div class="gallery-item">
+                <img src="Gemini_Generated_Image_amvtz6amvtz6amvt.png" alt="Night Queen">
+                <div class="gallery-caption">Night Queen</div>
+            </div>
+            <div class="gallery-item">
+                <img src="Gemini_Generated_Image_7s0kau7s0kau7s0k.png" alt="Fanatic">
+                <div class="gallery-caption">Fanatic</div>
+            </div>
+        </div>
+    </section>
+
+    <section id="shop">
+        <h2>Now Keep Up With Fashion </h2>
+        <div class="shop-grid">
+            
+            <div class="product-card" data-id="1" data-name="Aristocrat" data-price="12500" data-img="Gemini_Generated_Image_j6gp0fj6gp0fj6gp.jpg">
+                <div class="product-image-container">
+                    <img src="Gemini_Generated_Image_j6gp0fj6gp0fj6gp.png" alt="Aristocrat">
+                    <span class="product-price">12.500 TL</span>
+                </div>
+                <div class="product-details">
+                    <h3>Aristocrat</h3>
+                    <div class="product-actions">
+                        <select class="size-select">
+                            <option value="XS">XS</option>
+                            <option value="S" selected>S</option>
+                            <option value="M">M</option>
+                            <option value="L">L</option>
+                        </select>
+                        <button class="add-to-cart">Add To Cart</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-card" data-id="2" data-name="Cotton Candy" data-price="8900" data-img="unnamed.jpg">
+                <div class="product-image-container">
+                    <img src="unnamed.jpg" alt="Cotton Candy">
+                    <span class="product-price">8.900 TL</span>
+                </div>
+                <div class="product-details">
+                    <h3>Cotton Candy</h3>
+                    <div class="product-actions">
+                        <select class="size-select">
+                            <option value="XS" selected>XS</option>
+                            <option value="S">S</option>
+                            <option value="M">M</option>
+                            <option value="L">L</option>
+                        </select>
+                        <button class="add-to-cart">Add To Cart</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="product-card" data-id="3" data-name="Night Queen" data-price="11200" data-img="Gemini_Generated_Image_amvtz6amvtz6amvt.jpg">
+                <div class="product-image-container">
+                    <img src="Gemini_Generated_Image_amvtz6amvtz6amvt.png" alt="Night Queen">
+                    <span class="product-price">11.200 TL</span>
+                </div>
+                <div class="product-details">
+                    <h3>Night Queen</h3>
+                    <div class="product-actions">
+                        <select class="size-select">
+                            <option value="S">S</option>
+                            <option value="M" selected>M</option>
+                            <option value="L">L</option>
+                        </select>
+                        <button class="add-to-cart">Add To Cart</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+    
+    <section id="about">
+        <div class="about-content">
+            <h2>Lüksün ve Zarafetin Buluşma Noktası</h2>
+            <p><strong>Noire Ciel</strong>, gece göğünün sonsuz derinliğinden ilham alarak, zarafeti ve cesareti bir araya getiren özel tasarımlar sunar. Her parça, sofistike detaylar ve en kaliteli kumaşlarla, modern kadının gücünü ve inceliğini vurgulamak için yaratılmıştır.</p>
+            <p>Sadece bir giysi değil, bir duruş ve ifade biçimidir. Zamansız tasarımlarımızla kendinizi özel hissedin.</p>
+        </div>
+    </section>
+
+    <section id="signup">
+        <h2>Özel Bültenimize Kaydolun</h2>
+        <p>Yeni koleksiyonlar, özel indirimler ve etkinlikler hakkında ilk siz bilgi edinin.</p>
+        <form class="signup-form" onsubmit="handleSignup(event)">
+            <input type="email" placeholder="E-posta adresiniz" required>
+            <button type="submit">Kaydol</button>
+        </form>
+    </section>
+    
+    <footer>
+        &copy; 2025 Noire Ciel. Tüm hakları saklıdır. Lüks Tasarım ve Estetik.
+    </footer>
+
+    
+    <div id="welcomeModal" class="modal">
+        <div class="cart-modal-content welcome-modal-content">
+            <span class="close-button welcome-close-button">&times;</span>
+            <h2 class="cart-title">Hoş Geldiniz!</h2>
+            <div class="welcome-message">
+                <p><strong>Noire Ciel Ailesine Katıldığınız İçin Teşekkür Ederiz.</strong></p>
+                <p>En yeni koleksiyonlar, özel indirimler ve davetler ilk size ulaşacak.</p>
+                <p style="margin-top: 15px;">Zarafetiniz için.</p>
+            </div>
+            <button class="checkout-button welcome-continue-button">Alışverişe Devam Et</button>
+        </div>
+    </div>
+    
+    <div id="cartModal" class="modal">
+        <div class="cart-modal-content">
+            <span class="close-button cart-close-button">&times;</span>
+            <h2 class="cart-title">Sepetim</h2>
+            <div id="cart-items-container" class="cart-items-container">
+                </div>
+            <div class="cart-summary">
+                <p>Toplam Tutar: <span id="cart-total" class="total-price">0.00 TL</span></p>
+                <button class="checkout-button">Pay</button>
+            </div>
+        </div>
+    </div>
+    
+    <div id="imageModal" class="modal">
+        <span class="close-button">&times;</span>
+        <img class="modal-content" id="modalImage">
+        <div id="modalCaption" class="modal-caption"></div>
+        <a class="prev-next-button prev" onclick="changeModalImage(-1)">&#10094;</a>
+        <a class="prev-next-button next" onclick="changeModalImage(1)">&#10095;</a>
+    </div>
+
+    <script src="first.js"></script>
+</body>
+</html>
